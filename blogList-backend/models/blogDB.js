@@ -1,10 +1,24 @@
 const mongoose = require("mongoose");
 
 const blogSchema = new mongoose.Schema({
-  title: String,
-  author: String,
+  title: {
+    type: String,
+    required: [true, "A blog must have a title"],
+    minlength: [3, "Title must have more or equal than 3 characters"],
+  },
+  author: {
+    type: String,
+    required: [true, "A blog must have an author"],
+  },
   url: String,
-  likes: Number,
+  likes: {
+    type: Number,
+    default: 0,
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 blogSchema.set("toJSON", {
